@@ -1,29 +1,29 @@
-import React, {useCallback} from "react";
-import {useExampleRepoDispatcher} from "../../../repository/example/hooks";
+import React from "react";
 import {useFormInput} from "../../../utils/generalHooks";
-import {GetDataFromOutside, ReadData, RecordData} from "../../../usecase/exampleUC";
-import {ExampleComp} from "../../component/example";
+import {RecordData, useReadData} from "../../../usecase/exampleUC";
+import { Link } from "react-router-dom";
+import {useExampleRepo} from "../../../repository/example/hooks";
+import {useLoadData} from "./hooks";
 
 const ExampleContainer = () : JSX.Element => {
-    const exampleDispatcher = useExampleRepoDispatcher()
+    console.log("asdsad")
+    const exampleRepo = useExampleRepo()
+    useLoadData(exampleRepo)
     const textInput = useFormInput<string>("init2")
     const numberInput = useFormInput<number>(10)
-    const recordData = useCallback(() => {
-        RecordData({
-            textData:textInput.value,
-            numberData:numberInput.value,
-            dispatcher:exampleDispatcher
+    const recordData = () => {
+        RecordData(exampleRepo, {
+            textData: textInput.value,
+            numberData: numberInput.value,
         })
-    },[textInput.value,numberInput.value,exampleDispatcher])
-    const {numberData,textData} = ReadData()
-    const dataFromOutside = GetDataFromOutside()
+    }
+    const {numberData,textData} = useReadData(exampleRepo)
     return <div>
-        <ExampleComp data={dataFromOutside}/>
+        <Link to={"/example"}>
+            Example
+        </Link>
         <h3>
             Data Example Repo {`{Number data = ${numberData}, Text data = ${textData}}`}
-        </h3>
-        <h3>
-            Data from Api = {dataFromOutside}
         </h3>
         <input type={"text"} {...textInput}/>
         <h4>

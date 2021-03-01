@@ -1,26 +1,29 @@
-import {ExampleActionData, ExampleAction1, ExampleAction} from "./types";
+import {ExampleAction, ExampleAction1, ExampleAction2, ExampleActionData,ExampleRepoData} from "./types";
 
-interface Repo {
-    exampleData1: string,
-    exampleData2: number,
-}
-
-const Initial : Repo = {
+const Initial : ExampleRepoData = {
     exampleData1 : "init",
     exampleData2 : 2,
 }
 
-const Reducer = (state : Repo, action : ExampleActionData) : Repo  => {
+const ExampleReducer = (state : ExampleRepoData = Initial, action : ExampleActionData) : ExampleRepoData  => {
+    let data;
     switch (action.type) {
         case ExampleAction.Action1:
-            const data = action.data as ExampleAction1
+            data = action.data as ExampleAction1
             return {
                 exampleData1:data.data,
                 exampleData2:data.num,
             }
+        case ExampleAction.Action2:
+            data = action.data as ExampleAction2
+            return {
+                ...state,
+                exampleData1: data.data
+            }
+        case ExampleAction.Action3:
+            return Initial
     }
     return state
 }
 
-export {Reducer,Initial}
-export type { Repo }
+export {ExampleReducer}

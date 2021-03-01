@@ -1,3 +1,3 @@
-export const GetDataFromOutside = () => {
-    return "Data from outside"
+export const GetDataFromOutside = () : string => {
+    return "asdsadasd"
 }

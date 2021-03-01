@@ -1,18 +1,18 @@
-import * as ExampleRepo from "../repository/example/actionFunction"
+import * as ExampleActions from "../repository/example/actionFunction"
 import {ExampleDataRequest} from "./request/example";
 import {ExampleData} from "./viewmodel/example";
-import {useExampleRepoState} from "../repository/example/hooks";
-import * as ExampleApi from "../api/example"
+import {ExampleRepo} from "../repository/example/types";
+import {useMemo} from "react";
 
-export const RecordData = ({textData,numberData,dispatcher} : ExampleDataRequest) => {
-    ExampleRepo.DoAction1(textData,numberData,dispatcher)
+interface ExampleRepoDep extends ExampleRepo{
 }
 
-export const ReadData = () : ExampleData => {
-    const state = useExampleRepoState()
-    return {numberData: state.exampleData2, textData: state.exampleData1}
+export const RecordData = ({dispatcher} : ExampleRepoDep,{textData,numberData} : ExampleDataRequest) => {
+    ExampleActions.DoAction1(textData,numberData,dispatcher)
 }
 
-export const GetDataFromOutside = () : string => {
-    return ExampleApi.GetDataFromOutside()
+export const useReadData = ({state}: ExampleRepoDep) : ExampleData => {
+    return useMemo(() => {
+        return {numberData: state.exampleData2, textData: state.exampleData1}
+    },[state.exampleData1,state.exampleData2])
 }

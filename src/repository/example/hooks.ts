@@ -1,20 +1,19 @@
-import {ExampleDispatcher, ExampleRepoData, ExampleState} from "./types";
-import {useContext} from "react";
-import {RepoContext, RepoContextType} from "../context";
+import {ExampleActionData, ExampleRepoData, ExampleRepo} from "./types";
+import {useDispatch, useSelector} from "react-redux";
+import {RepositoryData} from "../index";
+import {Dispatch} from "redux";
 
-const useExampleRepo = (): ExampleRepoData => {
-    const {exampleRepo}: RepoContextType = useContext<RepoContextType>(RepoContext)
-    return exampleRepo as ExampleRepoData
+export const useExampleRepoState = () : ExampleRepoData => {
+    return useSelector<RepositoryData, ExampleRepoData>(state => state.exampleRepo)
 }
 
-const useExampleRepoState = () : ExampleState => {
-    const {exampleState} : ExampleRepoData = useExampleRepo()
-    return exampleState
+export const useExampleRepoDispatch = () : Dispatch<ExampleActionData> => {
+    return useDispatch<Dispatch<ExampleActionData>>()
 }
 
-const useExampleRepoDispatcher = () : ExampleDispatcher => {
-    const {exampleDispatcher}: ExampleRepoData = useExampleRepo()
-    return exampleDispatcher
+export const useExampleRepo = () : ExampleRepo => {
+    return {
+        dispatcher:useExampleRepoDispatch(),
+        state:useExampleRepoState()
+    }
 }
-
-export {useExampleRepo,useExampleRepoState,useExampleRepoDispatcher};

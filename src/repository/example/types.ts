@@ -1,6 +1,5 @@
-import {Dispatch, ReducerAction, ReducerState} from "react";
-import {Repo} from "./repo";
-import {Action} from "../general";
+import {Action, Repo} from "../generalType";
+import {Dispatch} from "redux";
 
 enum ExampleAction {
     Action1 ,
@@ -9,21 +8,23 @@ enum ExampleAction {
     Action4
 }
 
+interface ExampleRepoData {
+    exampleData1: string,
+    exampleData2: number,
+}
+
 type ExampleActionData = Action<ExampleAction,object>
-type ExampleReducer = (s: Repo, a:ExampleActionData) => Repo
-type ExampleDispatcher = Dispatch<ReducerAction<ExampleReducer>>
-type ExampleState = ReducerState<ExampleReducer>
-type ExampleRepoData = {exampleState: ExampleState,exampleDispatcher: ExampleDispatcher}
-type ExampleUseReducerOutput = [ExampleState,ExampleDispatcher]
+type ExampleDispatcher = Dispatch<ExampleActionData>
+type ExampleRepo = Repo<ExampleDispatcher, ExampleRepoData>
 
 interface ExampleAction1 {data: string, num:number}
+interface ExampleAction2 {data: string}
 
 export {ExampleAction}
 export type {
-    ExampleAction1,
     ExampleDispatcher,
+    ExampleAction1,
+    ExampleAction2,
     ExampleActionData,
     ExampleRepoData,
-    ExampleReducer,
-    ExampleUseReducerOutput,
-    ExampleState}
+    ExampleRepo}
