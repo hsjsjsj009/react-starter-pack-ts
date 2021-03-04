@@ -1,5 +1,8 @@
+import {JSXElementConstructor} from "react";
+
 export interface MainRoute {
     path : string,
-    handler : JSX.Element,
-    exact : boolean
+    handler : JSXElementConstructor<any>,
+    exact : boolean,
+    loginRequired?:boolean
 }

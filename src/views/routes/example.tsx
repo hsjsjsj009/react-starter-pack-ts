@@ -5,13 +5,14 @@ import {ExampleComp} from "../component/example";
 const Route : MainRoute[] = [
     {
         path:"/",
-        handler: <ExampleContainer/>,
+        handler: ExampleContainer,
         exact: true,
     },
     {
        path:"/example",
-       handler: <ExampleComp data={"test data"}/>,
-       exact:true
+       handler: (props) => ExampleComp({data:"asdasd",...props}),
+       exact:true,
+       loginRequired:true
     }
 ]
 

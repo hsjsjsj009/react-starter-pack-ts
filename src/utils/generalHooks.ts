@@ -17,7 +17,7 @@ export const useFormInput  = <T>(initData : T): FormInputData<T> => {
 
 export function useFetch({ api, method, url, data = null,config = null }  : {
     api:AxiosInstance,
-    method:'get'|'post'|'delete'|'put',
+    method:RequestType,
     config:any|null,
     url:string,
     data:any|null,

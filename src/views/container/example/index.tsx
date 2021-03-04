@@ -1,13 +1,12 @@
 import React from "react";
 import {useFormInput} from "../../../utils/generalHooks";
-import {RecordData, useReadData} from "../../../usecase/exampleUC";
+import {RecordData, ReadData} from "../../../usecase/exampleUC";
 import { Link } from "react-router-dom";
 import {useExampleRepo} from "../../../repository/example/hooks";
 import {useLoadData} from "./hooks";
 
 const ExampleContainer = () : JSX.Element => {
-    console.log("asdsad")
-    const exampleRepo = useExampleRepo()
+    const exampleRepo =  useExampleRepo()
     useLoadData(exampleRepo)
     const textInput = useFormInput<string>("init2")
     const numberInput = useFormInput<number>(10)
@@ -17,7 +16,8 @@ const ExampleContainer = () : JSX.Element => {
             numberData: numberInput.value,
         })
     }
-    const {numberData,textData} = useReadData(exampleRepo)
+    const {numberData,textData} = ReadData(exampleRepo)
+
     return <div>
         <Link to={"/example"}>
             Example

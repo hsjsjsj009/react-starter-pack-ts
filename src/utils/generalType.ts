@@ -4,10 +4,10 @@ type OnChangeFunc = (e:ChangeEvent<HTMLInputElement>) => void
 type FormInputData<T> = {value: T,onChange:OnChangeFunc}
 
 enum RequestType {
-    GET=10,
-    POST,
-    PUT,
-    DELETE
+    GET='get',
+    POST='post',
+    PUT='put',
+    DELETE='delete'
 }
 
 export {RequestType}
