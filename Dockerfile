@@ -14,9 +14,13 @@ RUN \
   yarn build
 
 FROM nginx:alpine
-RUN apk add --no-cache bash
 COPY --from=build-env /opt/app/build /var/www
-COPY --from=build-env /opt/app/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-env /opt/app/envsubt.sh /etc/nginx/templates/envsubt.sh
+COPY --from=build-env /opt/app/default.conf /etc/nginx/templates/default.conf.template
 WORKDIR /var/www
-EXPOSE 80 5000
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+
+RUN apk add --no-cache bash
+
+ENV PORT=80
+
+CMD ["/bin/sh", "-c", "/etc/nginx/templates/envsubt.sh && nginx -g \"daemon off;\""]
