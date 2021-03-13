@@ -10,7 +10,6 @@ WORKDIR /opt/app
 
 RUN \
   yarn install && \
-  yarn add @types/react-router-dom @types/react-redux @types/styled-components -D && \
   yarn build
 
 FROM nginx:alpine
