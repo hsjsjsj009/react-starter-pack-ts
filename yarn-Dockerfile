@@ -1,14 +1,20 @@
 # build stage called build-env
 FROM node:lts-alpine as build-env 
+
+#declare environment variable to build stage
 ENV NODE_ENV=production
 
+#add all file in the context to /opt/app (same as copy but it has extra feature)
 ADD . /opt/app
+
+#change the image base directory
 WORKDIR /opt/app
 
 RUN \
   yarn install && \
   yarn build
 
+#main stage
 FROM node:lts-alpine
 WORKDIR /opt/app
 # --from is used to tell the docker to get data from build stage called build-env
@@ -16,4 +22,5 @@ COPY --from=build-env /opt/app/build /opt/app/build
 
 RUN npm install -g serve
 
+#run this command when running a container from this image (same like entrypoint but it has some different feature)
 CMD ["serve","-s","build"]
