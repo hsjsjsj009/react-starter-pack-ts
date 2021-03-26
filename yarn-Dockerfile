@@ -1,5 +1,5 @@
-# build stage
-FROM node:lts-alpine as build-env
+# build stage called build-env
+FROM node:lts-alpine as build-env 
 ENV NODE_ENV=production
 
 ADD . /opt/app
@@ -11,6 +11,7 @@ RUN \
 
 FROM node:lts-alpine
 WORKDIR /opt/app
+# --from is used to tell the docker to get data from build stage called build-env
 COPY --from=build-env /opt/app/build /opt/app/build
 
 RUN npm install -g serve
