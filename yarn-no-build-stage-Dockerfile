@@ -1,13 +1,18 @@
 FROM node:lts-alpine
+#declare environment variable
 ENV NODE_ENV=production
 
+#add all file in the context to /opt/app (same as copy but it has extra feature)
 ADD . /opt/app
+
+#change the image base directory
 WORKDIR /opt/app
 
 RUN \
   yarn install && \
   yarn build && npm install -g serve
 
+#run this command when running a container from this image (same like entrypoint but it has some different feature)
 CMD ["serve","-s","build"]
 
 
